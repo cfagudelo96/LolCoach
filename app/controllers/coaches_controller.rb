@@ -4,6 +4,8 @@ class CoachesController < ApplicationController
     action = params[:result][:action]
     if action == 'test'
       test(params[:result][:parameters][:champion])
+    elsif action == 'update_champions'
+      render json: Champion.update_champions
     end
   end
 
