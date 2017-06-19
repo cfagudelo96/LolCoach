@@ -25,4 +25,4 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV['LOLCOACH_DATABASE_URL'] %>
+  url: <%= ENV['DATABASE_URL'] %>
