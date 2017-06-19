@@ -13,6 +13,8 @@ class CoachesController < ApplicationController
 
   def test(champion)
     champion = Champion.find_by_name(champion)
-    render json: champion
+    text = "#{champion.name} is #{champion.title}"
+    response = { speech: text, displayText: text }
+    render json: response
   end
 end
