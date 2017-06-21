@@ -22,6 +22,8 @@ class CoachesController < ApplicationController
   def champions_to_ban
     role = params[:result][:parameters][:role]
     highest_win_rate_champions = Champion.highest_win_rate_champions(role)
+    puts "Lista de campeones con mayor winrate #{highest_win_rate_champions}"
+    puts "Length de lista de campeones con mayor winrate #{highest_win_rate_champions.length}"
     text = 'You should ban '
     text += list_to_text(highest_win_rate_champions)
     response = { speech: text, displayText: text }
@@ -29,6 +31,7 @@ class CoachesController < ApplicationController
   end
 
   def list_to_text(list)
+    puts "LLAMADA AL METODO LIST_TO_TEXT"
     text = ''
     list.each_with_index do |element, index|
       if index + 1 == list.length && list.length > 1
@@ -36,6 +39,8 @@ class CoachesController < ApplicationController
       elsif index != 0
         text += ', '
       end
+      puts "Elemento #{element}"
+      puts "TEXTO #{text}"
       text += element.to_s
     end
     text
