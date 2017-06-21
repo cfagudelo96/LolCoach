@@ -15,7 +15,7 @@ class Champion < ApplicationRecord
   end
 
   def self.update_champions
-    # update_static_info
+    update_static_info
     update_performance_info
     Champion.all
   end
