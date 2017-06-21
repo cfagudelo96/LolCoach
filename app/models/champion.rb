@@ -1,30 +1,65 @@
 class Champion < ApplicationRecord
-  def self.update_champions
-    champions_info = RiotGamesAPI.new.champions_info
-    if champions_info.code == 200
-      champions = champions_info.parsed_response['data']
-      champions.each do |champion_key, champion_value|
-        begin
-          Champion.find(champion_value[:id]).update(champion_value)
-        rescue ActiveRecord::RecordNotFound
-          Champion.create(champion_value)
-        end
-      end
+  CHAMPION_HASH_INDEX = 1
+
+  has_many :champion_performances
+
+  def self.highest_win_rate_champions(role, limit = 5)
+    if role.present?
+      Champion.joins(:champion_performances)
+              .merge(ChampionPerformance.by_role(role))
+              .merge(ChampionPerformance.ordered_by_win_rate).limit(limit)
+    else
+      Champion.joins(:champion_performances)
+              .merge(ChampionPerformance.ordered_by_win_rate).limit(limit)
     end
+  end
+
+  def self.update_champions
+    # update_static_info
+    update_performance_info
     Champion.all
   end
 
-  def update_champion(id)
-    champion_info = RiotGamesAPI.new.champion_info(id)
-    champion = nil
-    if champion_info.code == 200
+  def self.update_static_info
+    champions_info = RiotGamesAPI.new.champions_info
+    return if champions_info.code != 200
+    champions_hash = champions_info.parsed_response['data']
+    process_static_info(champions_hash)
+  end
+
+  def self.process_static_info(champions_hash)
+    champions_hash.each do |champion_array|
+      champion_hash = slice_static_info(champion_array[CHAMPION_HASH_INDEX])
       begin
-        champion = Champion.find(id)
-        champion.update(champion_info.parsed_response)
+        Champion.find(champion_hash['id']).update(champion_hash)
       rescue ActiveRecord::RecordNotFound
-        champion = Champion.create(champion_info.parsed_response)
+        Champion.create(champion_hash)
       end
     end
-    champion
   end
+
+  def self.slice_static_info(champion_hash)
+    champion_hash.slice('id', 'name', 'title')
+  end
+
+  def self.update_performance_info
+    champions_info = ChampionGgAPI.new.champions_performance
+    return if champions_info.code != 200
+    champions_info.parsed_response.each do |performance_hash|
+      champion_id = performance_hash['_id']['championId']
+      role = performance_hash['_id']['role']
+      champion_performance = ChampionPerformance.find_by_champion_id_and_role(champion_id, role)
+      champion_performance.update(win_rate: performance_hash['winRate'],
+                                  ban_rate: performance_hash['banRate'])
+    end
+  end
+
+  def to_s
+    name
+  end
+
+  private_class_method :update_static_info,
+                       :process_static_info,
+                       :slice_static_info,
+                       :update_performance_info
 end
