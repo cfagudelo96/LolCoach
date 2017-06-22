@@ -14,6 +14,8 @@ class CoachesController < ApplicationController
           ChampionPerformance.create(champion_id: champion.id, role: role)
         end
       end
+    elsif action == 'update_items'
+      Item.update_items
     end
   end
 

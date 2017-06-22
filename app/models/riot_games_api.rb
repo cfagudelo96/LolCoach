@@ -13,4 +13,12 @@ class RiotGamesAPI
   def champion_info(champion_id)
     self.class.get("/lol/static-data/v3/champions/#{champion_id}", @options)
   end
+
+  def items_info
+    self.class.get('/lol/static-data/v3/items', @options)
+  end
+
+  def item_info(item_id)
+    self.class.get("/lol/static-data/v3/items/#{item_id}", @options)
+  end
 end
