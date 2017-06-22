@@ -21,4 +21,12 @@ class RiotGamesAPI
   def item_info(item_id)
     self.class.get("/lol/static-data/v3/items/#{item_id}", @options)
   end
+
+  def summoner_spells_info
+    self.class.get('/lol/static-data/v3/summoner-spells', @options)
+  end
+
+  def summoner_spell_info(summoner_spell_id)
+    self.class.get("/lol/static-data/v3/summoner-spells/#{item_id}", @options)
+  end
 end
