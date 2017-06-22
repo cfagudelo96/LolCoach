@@ -21,7 +21,7 @@ test:
   user: lolcoach
   password: L0lC04ch
   host: localhost
-  port: 5433
+  port: 5432
 
 production:
   <<: *default

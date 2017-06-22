@@ -5,17 +5,15 @@ class CoachesController < ApplicationController
     if action == 'champions_to_ban'
       champions_to_ban
     elsif action == 'update_champions'
-      render json: Champion.update_champions
-    elsif action == 'champion_performance'
       Champion.update_champions
+    elsif action == 'update_items'
+      Item.update_items
     elsif action == 'populate_database'
       Champion.all.each do |champion|
         ChampionPerformance::ROLES.each do |role|
           ChampionPerformance.create(champion_id: champion.id, role: role)
         end
       end
-    elsif action == 'update_items'
-      Item.update_items
     end
   end
 
@@ -41,12 +39,5 @@ class CoachesController < ApplicationController
       text += element.to_s
     end
     text
-  end
-
-  def test(champion)
-    champion = Champion.find_by_name(champion)
-    text = "#{champion.name} is #{champion.title}"
-    response = { speech: text, displayText: text }
-    render json: response
   end
 end

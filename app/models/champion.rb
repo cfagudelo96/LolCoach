@@ -17,7 +17,6 @@ class Champion < ApplicationRecord
   def self.update_champions
     update_static_info
     update_performance_info
-    Champion.all
   end
 
   def self.update_static_info
@@ -46,12 +45,17 @@ class Champion < ApplicationRecord
     champions_info = ChampionGgAPI.new.champions_performance
     return if champions_info.code != 200
     champions_info.parsed_response.each do |performance_hash|
-      champion_id = performance_hash['_id']['championId']
-      role = performance_hash['_id']['role']
-      champion_performance = ChampionPerformance.find_by_champion_id_and_role(champion_id, role)
-      champion_performance.update(win_rate: performance_hash['winRate'],
-                                  ban_rate: performance_hash['banRate'])
+      slice_performance_info(performance_hash)
+      champion_performance = ChampionPerformance.find_by_champion_id_and_role(performance_hash['champion_id'], performance_hash['role'])
+      champion_performance.update(performance_hash) if champion_performance.present?
     end
+  end
+
+  def self.slice_performance_info(performance_hash)
+    performance_hash['champion_id'] = performance_hash['_id']['championId']
+    performance_hash['win_rate'] = performance_hash['winRate']
+    performance_hash['ban_rate'] = performance_hash['banRate']
+    performance_hash.slice('champion_id', 'role', 'win_rate', 'ban_rate')
   end
 
   def to_s

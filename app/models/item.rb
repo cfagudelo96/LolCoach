@@ -6,7 +6,6 @@ class Item < ApplicationRecord
 
   def self.update_items
     update_static_info
-    Item.all
   end
 
   def self.update_static_info
@@ -28,9 +27,7 @@ class Item < ApplicationRecord
   end
 
   def self.slice_static_info(items_hash)
-    plain_text = items_hash['plaintext']
-    items_hash.delete('plaintext')
-    items_hash['plain_text'] = plain_text
+    items_hash['plain_text'] = items_hash['plaintext']
     items_hash.slice('id', 'name', 'plain_text')
   end
 
