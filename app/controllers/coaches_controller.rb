@@ -10,6 +10,8 @@ class CoachesController < ApplicationController
       Item.update_items
     elsif action == 'update_summoners'
       SummonerSpell.update_summoner_spells
+    elsif action == 'update_runes'
+      Rune.update_runes
     elsif action == 'populate_database'
       Champion.all.each do |champion|
         ChampionPerformance::ROLES.each do |role|
