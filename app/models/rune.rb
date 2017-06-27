@@ -5,7 +5,6 @@ class Rune < ApplicationRecord
 
   def self.update_runes
     update_static_info
-    Rune.all
   end
 
   def self.update_static_info
@@ -28,8 +27,8 @@ class Rune < ApplicationRecord
 
   def self.slice_static_info(rune_hash)
     rune_hash['tier'] = rune_hash['rune']['tier']
-    rune_hash['type'] = rune_hash['rune']['type']
-    rune_hash.slice('id', 'name', 'description', 'tier', 'type')
+    rune_hash['color'] = rune_hash['rune']['type']
+    rune_hash.slice('id', 'name', 'description', 'tier', 'color')
   end
 
   def to_s

@@ -5,7 +5,6 @@ class SummonerSpell < ApplicationRecord
 
   def self.update_summoner_spells
     update_static_info
-    SummonerSpell.all
   end
 
   def self.update_static_info
