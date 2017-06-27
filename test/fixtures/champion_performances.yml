@@ -5,12 +5,14 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
+  id: 1
   champion_id: 1
   role: MIDDLE
   win_rate: 0.49
   ban_rate: 0.49
 
 two:
+  id: 2
   champion_id: 1
   role: TOP
   win_rate: 0.51

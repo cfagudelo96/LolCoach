@@ -2,7 +2,6 @@ class Item < ApplicationRecord
   ITEM_HASH_INDEX = 1
 
   validates :name, presence: true
-  validates :plain_text, presence: true
 
   def self.update_items
     update_static_info
@@ -29,6 +28,11 @@ class Item < ApplicationRecord
   def self.slice_static_info(items_hash)
     items_hash['plain_text'] = items_hash['plaintext']
     items_hash.slice('id', 'name', 'plain_text')
+  end
+
+  def self.reset_usages_scores
+    InitialItemUsage.reset_scores
+    FinalItemUsage.reset_scores
   end
 
   def to_s

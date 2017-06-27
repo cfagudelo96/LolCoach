@@ -7,6 +7,8 @@ class ChampionPerformance < ApplicationRecord
   ROLES = [MIDDLE, TOP, JUNGLE, DUO_CARRY, DUO_SUPPORT].freeze
 
   belongs_to :champion
+  has_many :initial_item_usages
+  has_many :final_item_usages
 
   validates :role, uniqueness: { scope: :champion }, inclusion: { in: ROLES }
 
