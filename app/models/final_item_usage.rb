@@ -3,7 +3,17 @@ class FinalItemUsage < ApplicationRecord
   belongs_to :item
 
   def self.reset_scores
-    FinalItemUsage.update_all(score: 0)
+    update_all(score: 0)
+  end
+
+  def self.update_final_item_usages(champion_hash, champion_performance)
+    items_string = champion_hash.dig('hashes', 'finalitemshashfixed',
+                                     'highestCount', 'hash')
+    return if items_string.blank?
+    items_list = Helper.split_string(items_string)
+    items_list.each do |item_id|
+      update_item_usage(champion_performance, item_id)
+    end
   end
 
   def self.update_item_usage(champion_performance, item_id)

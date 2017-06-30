@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  champion_performance_id: 1
+  enemy_champion_id: 1
+  win_rate: 9.99
+  enemy_win_rate: 9.99
+  gold_earned: 1
+  enemy_gold_earned: 1
+
+two:
+  champion_performance_id: 1
+  enemy_champion_id: 1
+  win_rate: 9.99
+  enemy_win_rate: 9.99
+  gold_earned: 1
+  enemy_gold_earned: 1

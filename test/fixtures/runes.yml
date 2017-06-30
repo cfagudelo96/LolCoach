@@ -3,11 +3,11 @@
 one:
   name: MyString
   description: MyString
-  type: 
+  color: MyString
   tier: 1
 
 two:
   name: MyString
   description: MyString
-  type: 
+  color: MyString
   tier: 1

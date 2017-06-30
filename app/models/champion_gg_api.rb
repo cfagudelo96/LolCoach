@@ -8,11 +8,7 @@ class ChampionGgAPI
 
   def champions_variable_info
     @options[:query][:limit] = 200
-    @options[:query][:champData] = 'winRate,hashes'
-    self.class.get('/v2/champions', @options)
-  end
-
-  def champions
+    @options[:query][:champData] = 'winRate,hashes,matchups'
     self.class.get('/v2/champions', @options)
   end
 end
