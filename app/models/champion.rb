@@ -1,9 +1,40 @@
 class Champion < ApplicationRecord
+  extend Speech
+  include Speech
+
   CHAMPION_HASH_INDEX = 1
 
   has_many :champion_performances
 
   scope :by_name_like, (->(name) { where('name like ?', "%#{name}%") })
+
+  def champion_performance(role)
+    if champion_performances.size == 1
+      champion_performances.first
+    else
+      champion_performances.find_by_role(role)
+    end
+  end
+
+  def role_not_specified_response
+    champion_roles = champion_performances.pluck(:role)
+    champion_roles_text = list_to_text(champion_roles, 'or maybe')
+    speech = "Which role are you playing #{name}: #{champion_roles_text}"
+    display_text = "Which role are you playing #{name}: #{champion_roles_text}"
+    { speech: speech, displayText: display_text }
+  end
+
+  def self.champion_not_found_response(champion_name)
+    speech = "I couldn't find the champion that you were referring to"
+    champions_like = Champion.by_name_like(champion_name)
+    display_text = if champions_like.empty? || champion_name.blank?
+                     "I couldn't find the champion that you were referring to"
+                   else
+                     "Maybe you were referring to #{list_to_text(champions_like,
+                                                                 'or')}"
+                   end
+    { speech: speech, displayText: display_text }
+  end
 
   def self.highest_win_rate_champions(role, limit = 5)
     if role.present?

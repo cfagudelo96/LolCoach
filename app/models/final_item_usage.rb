@@ -18,4 +18,8 @@ class FinalItemUsage < ApplicationRecord
       champion_performance.final_item_usages.create(item_id: item_id, score: 1)
     end
   end
+
+  def to_s
+    quantity > 1 ? "#{quantity} #{item}" : item.to_s
+  end
 end
