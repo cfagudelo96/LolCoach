@@ -5,13 +5,15 @@ class CoachesController < ApplicationController
                 only: %i[champion_items
                          champion_initial_items
                          champion_final_items
-                         champions_to_ban]
+                         champions_to_ban
+                         counters_to_champion]
   before_action :set_champion_name,
                 :set_champion,
                 :set_champion_performance,
                 only: %i[champion_items
                          champion_initial_items
-                         champion_final_items]
+                         champion_final_items
+                         counters_to_champion]
 
   def help
     action = params[:result][:action]
@@ -30,6 +32,10 @@ class CoachesController < ApplicationController
       redirect_to action: 'champion_final_items',
                   champion_name: parameters[:champion],
                   role: parameters[:role]
+    elsif action == 'counters_to_champion'
+      redirect_to action: 'counters_to_champion',
+                  champion_name: parameters[:champion],
+                  role: parameters[:role]
     elsif action == 'update_champions'
       Champion.update_champions
     elsif action == 'update_items'
@@ -39,6 +45,12 @@ class CoachesController < ApplicationController
     elsif action == 'update_runes'
       Rune.update_runes
     end
+  end
+
+  def counters_to_champion
+    counters = @champion_performance.counters
+    speech = "The top counters for #{@champion_performance} are #{list_to_text(counters, 'and')}"
+    render json: { speech: speech, displayText: speech }
   end
 
   def champion_items
