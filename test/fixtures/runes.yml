@@ -1,12 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   name: MyString
   description: MyString
   color: MyString
   tier: 1
 
 two:
+  id: 2
   name: MyString
   description: MyString
   color: MyString

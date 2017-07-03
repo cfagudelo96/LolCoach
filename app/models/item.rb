@@ -1,7 +1,9 @@
 class Item < ApplicationRecord
   ITEM_HASH_INDEX = 1
 
-  validates :name, presence: true
+  has_many :tips
+
+  validates :name, presence: true, uniqueness: true
 
   def self.update_items
     items_info = RiotGamesAPI.new.items_info
@@ -27,8 +29,8 @@ class Item < ApplicationRecord
   end
 
   def self.reset_usages_scores
-    InitialItemUsage.reset_scores
-    FinalItemUsage.reset_scores
+    InitialItemUsage.reset
+    FinalItemUsage.reset
   end
 
   def to_s

@@ -1,11 +1,6 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  champion_id: 1
-  item_id: 1
-  score: 9.99
-
-two:
-  champion_id: 1
-  item_id: 1
-  score: 9.99
+  id: 1
+  champion_performance_id: 2
+  item_id: 2
+  score: 1
+  quantity: 1

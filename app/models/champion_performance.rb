@@ -12,6 +12,8 @@ class ChampionPerformance < ApplicationRecord
   has_many :matchups
 
   validates :role, uniqueness: { scope: :champion }, inclusion: { in: ROLES }
+  validates :win_rate, numericality: { greater_than_or_equal_to: 0 }
+  validates :ban_rate, numericality: { greater_than_or_equal_to: 0 }
 
   scope :by_role, (->(role) { where(role: role) })
   scope :ordered_by_win_rate, (-> { where.not(win_rate: nil).order(win_rate: :desc) })

@@ -2,8 +2,11 @@ class FinalItemUsage < ApplicationRecord
   belongs_to :champion_performance
   belongs_to :item
 
-  def self.reset_scores
-    update_all(score: 0)
+  validates :item, uniqueness: { scope: :champion_performance }
+  validates :quantity, numericality: { greater_than_or_equal_to: 1 }
+
+  def self.reset
+    update_all(score: 0, quantity: 1)
   end
 
   def self.update_final_item_usages(champion_hash, champion_performance)

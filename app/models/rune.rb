@@ -1,5 +1,6 @@
 class Rune < ApplicationRecord
   RUNE_HASH_INDEX = 1
+  
   validates :name, presence: true
   validates :description, presence: true
 

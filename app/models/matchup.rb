@@ -2,6 +2,12 @@ class Matchup < ApplicationRecord
   belongs_to :champion_performance
   belongs_to :enemy_champion, class_name: 'Champion'
 
+  validates :enemy_champion, uniqueness: { scope: :champion_performance }
+  validates :win_rate, numericality: { greater_than_or_equal_to: 0 }
+  validates :enemy_win_rate, numericality: { greater_than_or_equal_to: 0 }
+  validates :gold_earned, numericality: { greater_than_or_equal_to: 0 }
+  validates :enemy_gold_earned, numericality: { greater_than_or_equal_to: 0 }
+
   def self.update_matchups(champion_hash, champion_performance)
     matchups_array = champion_hash['matchups'][champion_performance.role]
     matchups_array.each do |matchup_hash|

@@ -6,6 +6,11 @@ class ItemTest < ActiveSupport::TestCase
     assert_not item.save
   end
 
+  test 'should not save without unique name' do
+    item = Item.new(name: 'MyString')
+    assert_not item.save
+  end
+
   test 'should save' do
     item = Item.new(name: 'Test')
     assert item.save

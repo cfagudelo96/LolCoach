@@ -2,10 +2,12 @@
 
 one:
   id: 1
-  name: MyString
-  description: MyString
+  champion_id: 1
+  tip: MyString
+  against: false
 
 two:
   id: 2
-  name: MyString
-  description: MyString
+  item_id: 1
+  tip: MyString
+  against: false

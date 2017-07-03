@@ -5,6 +5,9 @@ class Champion < ApplicationRecord
   CHAMPION_HASH_INDEX = 1
 
   has_many :champion_performances
+  has_many :tips
+
+  validates :name, presence: true, uniqueness: true
 
   scope :by_name_like, (->(name) { where('name like ?', "%#{name}%") })
 
