@@ -61,7 +61,7 @@ class CoachesController < ApplicationController
   end
 
   def general_tip
-
+    render json: Tip.ramdom_tip
   end
 
   def role_tip

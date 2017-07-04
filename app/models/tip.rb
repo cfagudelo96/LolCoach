@@ -35,4 +35,9 @@ class Tip < ApplicationRecord
       errors.add(:against, "can't be present if the tip is not about a champion")
     end
   end
+
+  def self.ramdom_tip
+    tips = Tip.all
+    tips[rand((tips.size-1)).floor ].attributes['tip']
+  end
 end
