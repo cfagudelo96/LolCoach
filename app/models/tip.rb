@@ -36,8 +36,31 @@ class Tip < ApplicationRecord
     end
   end
 
-  def self.ramdom_tip
-    tips = Tip.all
-    tips[rand((tips.size-1)).floor ].attributes['tip']
+  def self.ramdom_general_tip
+    tips = Tip.where("champion_id IS ? AND item_id IS ? AND role IS ?", nil, nil, nil)
+    if tips.size>1
+      tips[rand((tips.size)).floor ].attributes['tip']
+    else
+      return a = 'No hay tips'
+    end
+  end
+
+  def self.ramdom_rol_tip
+    tips = Tip.where.not("role IS ?", nil)
+    if tips.size>1
+      tips[rand((tips.size)).floor ].attributes['tip']
+    else
+      return a = 'No hay tips'
+    end
+
+  end
+
+  def self.ramdom_champion_tip
+    tips = Tip.where.not("champion_id IS ?", nil, nil, nil)
+    if tips.size>1
+      tips[rand((tips.size)).floor ].attributes['tip']
+    else
+      return a = 'No hay tips'
+    end
   end
 end

@@ -4,7 +4,7 @@ class ChampionsController < ApplicationController
   before_action :set_champion_name, :set_champion
 
   def champion_tip
-    tip = Tip
+    render json: Tip.ramdom_champion_tip
   end
 
   def against_champion_tip
