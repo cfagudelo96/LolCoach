@@ -61,13 +61,13 @@ class CoachesController < ApplicationController
   end
 
   def general_tip
-    text = Tip.ramdom_general_tip
+    text = Tip.random_general_tip
     response = { speech: text, displayText: text }
     render json: response
   end
 
   def role_tip
-    text = Tip.ramdom_rol_tip
+    text = Tip.random_role_tip
     response = { speech: text, displayText: text }
     render json: response
   end
